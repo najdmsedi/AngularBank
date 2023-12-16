@@ -1,0 +1,203 @@
+<body>
+    <!--  Body Wrapper -->
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+      data-sidebar-position="fixed" data-header-position="fixed">
+      <!-- Sidebar Start -->
+        <app-sidebar></app-sidebar>
+      <!--  Sidebar End -->
+
+     <!--  Main wrapper -->
+    <div class="body-wrapper">
+      <!--  Header Start -->
+      <app-header></app-header>
+      <!--  Header End -->
+
+  <!-- -----------------------------------------------------Modal New---------------------------------------------------------------- -->
+  <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h2>add compte</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="accountForm" (ngSubmit)="addAccount()">
+                  <div class="row">
+                    <div class="form-group mt-3 mt-md-0">
+                      <label for="cinInput">CIN</label>
+                      <input type="text" class="form-control" value="{{paramsCin}}" formControlName="cin" readonly>
+                    </div>   
+
+                    <div class="form-group mt-3 mt-md-0">
+                      <label for="cinInput">First Name</label>
+                      <input type="text" class="form-control" value="{{firstName}}" formControlName="prenom" readonly>
+                    </div>                       
+                    <div class="form-group mt-3 mt-md-0">
+                      <label for="cinInput">Last Name</label>
+                      <input type="text" class="form-control" value="{{lastName}}" formControlName="nom" readonly>
+                    </div>   
+                    <div class="form-group mt-3 mt-md-0">
+                      <label for="cinInput">SOLDE</label>
+                      <input type="number" class="form-control" placeholder="Solde" formControlName="solde" required>
+                      <div  style="color: red;">
+                        {{addError}}
+                      </div>
+                      <button type="submit"  class="btn btn-primary  w-100 mt-3" >Submit</button>
+                    </div>          
+                  </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- -------------------------------------------------------------------------------------------------------------------------- -->
+       <!-- -----------------------------------------------------Modal Update---------------------------------------------------------------- -->
+  <div class="modal fade" id="UpdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h2>edit client</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="accountForm" (ngSubmit)="editAccount()">
+                <div class="row">
+                  <div class="form-group mt-3 mt-md-0">
+                    <label for="cinInput">CIN</label>
+                    <input type="text" class="form-control" value="{{paramsCin}}" formControlName="cin" readonly>
+                  </div>
+                  <div class="form-group mt-3 mt-md-0">
+                    <label for="cinInput">First Name</label>
+                    <input type="text" class="form-control" value="{{firstName}}" formControlName="prenom" readonly>
+                  </div>
+                  <div class="form-group mt-3 mt-md-0">
+                    <label for="cinInput">Last Name</label>
+                    <input type="text" class="form-control" value="{{lastName}}" formControlName="nom" readonly>
+                  </div>
+                  <div class="form-group mt-3 mt-md-0">
+                    <label for="cinInput">Rib</label>
+                    <input type="text" class="form-control" value="{{compteplus.rib}}" formControlName="rib" readonly>
+                  </div>
+                  <div class="form-group mt-3 mt-md-0">
+                    <label for="cinInput">SOLDE</label>
+                    <input type="number" class="form-control" value="{{compteplus.solde}}" formControlName="solde" required>
+                    <div  style="color: red;">
+                      {{editSolde}}
+                    </div>
+                    <button type="submit"  class="btn btn-primary  w-100 mt-3" >Submit</button>
+                  </div>          
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- -------------------------------------------------------------------------------------------------------------------------- -->
+       <!-- -----------------------------------------------------Modal Delete---------------------------------------------------------------- -->
+       <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2>Delete Client</h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to delete this account?</p>
+              <div class="text-center">
+                
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary mx-2" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger mx-2" data-target="modal" (click)="deleteCompte()">Confirm Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+        <!-- -------------------------------------------------------------------------------------------------------------------------- -->
+     
+
+      
+      <div class="container-fluid">
+        <!--  Row 1 -->
+        <div class="row">
+          <div class="d-sm-flex align-items-center justify-content-between mb-2">   
+            <h3> <a style="color: black;" href="client">clients </a>/ {{client.prenom}} {{client.nom}}</h3>
+            
+          <div class="filters">
+            <h4>Search</h4>
+            <div class="form-group">
+                <input id="name" type="text" class="form-control custom-input" (change)="applyFilter($event)"
+                       (input)="applyFilter($event)" name="name" placeholder="Name..   " #input>
+            </div>
+        </div>
+            <button data-toggle="modal" data-target="#Modal" class="btn btn-primary">
+              <mat-icon class="btn-icon">add_circle_outline</mat-icon>
+            </button>
+          </div>
+          <table mat-table [dataSource]="dataComptes" class="custom-table" style="zoom: 90%;">
+            <!-- Define table columns -->
+            <ng-container matColumnDef="rang">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> N°</th>
+              <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="rib">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> RIB </th>
+              <td mat-cell *matCellDef="let compte"> {{compte.rib}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cin">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Numéro de CIN </th>
+              <td mat-cell *matCellDef="let compte"> {{compte.client.cin}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="solde">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Solde </th>
+              <td mat-cell *matCellDef="let compte"> {{compte.solde}} Dt</td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> action </th>
+              <td mat-cell *matCellDef="let compte"> 
+                <span>
+                  <button (click)="setRib(compte)" data-toggle="modal" data-target="#UpdateModal" type="button" class="btn btn-success">
+                    <mat-icon class="btn-icon">edit</mat-icon>
+                  </button>
+                  &nbsp;  
+                  <button (click)="setRib(compte)" data-toggle="modal" data-target="#DeleteModal" type="button" class="btn btn-danger">
+                    <mat-icon class="btn-icon">delete</mat-icon>          
+                  </button> 
+                </span>
+              </td>
+            </ng-container>
+    
+            <!-- Render table rows -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns; let even = even"
+              [ngClass]="{ 'even-row': even, 'odd-row': !even }">
+            </tr>
+          </table>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+
+  
+  </body>

@@ -1,0 +1,23 @@
+.custom-table .odd-row {
+    background-color: #e8efff;
+}
+
+.custom-table tr:hover {
+    background-color: #c4d2fb;
+}
+
+.custom-table th,
+th:hover {
+    background-color: #0d3dc2;
+    color: white;
+}
+
+
+.filters {
+    margin: 20px;
+}
+
+/* Custom class for larger input */
+.custom-input {
+    width: 400px; /* Adjust the width as needed */
+}
